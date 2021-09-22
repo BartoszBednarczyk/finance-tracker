@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+    apiKey: "AIzaSyDXkZSHUkD74dwKQqWqRZUnqhfE8IG34IY",
+    authDomain: "finance-tracker-bb.firebaseapp.com",
+    projectId: "finance-tracker-bb",
+    storageBucket: "finance-tracker-bb.appspot.com",
+    messagingSenderId: "350929010063",
+    appId: "1:350929010063:web:6581d6ae2cbfb6b2289ffa"
+  }
 };
 
 /*

@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="content-container">
+        <h1 class="logo">FINANCE <br> TRACKER</h1>
+        <div class="info">
+            <h1>Manage your finances</h1>
+        <p>We can help you with tracking your daily expenses so you'll never wonder where all your money disappeared!</p>
+        </div>
+            <form class="form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+                <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input formControlName="email" matInput >
+                    <mat-error *ngIf="loginForm.invalid">{{getErrorMessage('email')}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password" type="password">
+                    <mat-error *ngIf="loginForm.invalid">{{getErrorMessage('password')}}</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="primary" [disabled]="!loginForm.valid">Sign in</button>
+                <p>Don't have an account yet? <a href="" routerLink="/auth/register">Click here</a> to sign up!</p>
+            </form>
+    </div>
+    <div class="image-container">
+        <!-- <img src="assets/images/loginScreen.svg"> -->
+    </div>
+</div>
+
+<!-- <button (click)="signUp()">
+    Zarejestruj
+</button>
+
+<button (click)="checkId()">
+    Check Id
+</button>
+
+<button (click)="signOut()">
+    Wyloguj
+</button>
+
+<button (click)="signIn()">
+    Zaloguj
+</button>
+
+<button (click)="test()">
+    Test
+</button> -->

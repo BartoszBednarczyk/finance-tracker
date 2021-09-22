@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="image-container">
+        
+    </div>
+    <div class="content-container">
+        <h1 class="logo">FINANCE <br> TRACKER</h1>
+        <div class="info">
+            <h1>It will take just a moment</h1>
+        </div>
+            <form class="form" [formGroup]="loginForm">
+                <mat-form-field>
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" formControlName="name">
+                    <mat-error *ngIf="loginForm.invalid">{{getErrorMessage('name')}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input matInput type="email" formControlName="email">
+                    <mat-error *ngIf="loginForm.invalid">{{getErrorMessage('email')}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-error *ngIf="loginForm.invalid">{{getErrorMessage('password')}}</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="primary" [disabled]="!loginForm.valid">Sign up</button>
+                <p>Have an account already? <a href="" routerLink="/auth/login">Click here</a> to sign in!</p>
+                <mat-divider></mat-divider>
+                <div class="icons">
+                    <img src="assets/images/socialIcons/google.svg">
+                    <img src="assets/images/socialIcons/microsoft.svg">
+                    <img src="assets/images/socialIcons/facebook.svg">
+                </div>
+                <div class="alternative-icons-text">
+                    <p>Or use alternative method</p>
+                </div>
+                
+            </form>
+    </div>
+</div>

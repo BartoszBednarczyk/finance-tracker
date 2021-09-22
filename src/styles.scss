@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/theming";
+$custom-typography: mat-typography-config(
+  $font-family: "Lato",
+);
+@include angular-material-typography($custom-typography);
+@import "./assets/theme.scss";
+:root {
+  --primary: #155263;
+  --secondary: #ffc93c;
+  --background-light: #e8e8e8;
+  --background-dark: #e0e0e0;
+  --primary-light: #a2dbfa;
+  --primary-dark: #053742;
+  --white: #e8f0f2;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--background-light);
+}
+body {
+  margin: 0;
+}
+
+h1 {
+  color: var(--primary);
+  font-weight: 600 !important;
+  font-size: 1.5em;
+}
+
+p {
+  color: var(--primary);
+  font-weight: 400;
+  font-size: 1.2em;
+}
