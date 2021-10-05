@@ -49,11 +49,11 @@ export class LoginComponent implements OnInit {
 
   // testing methods below
 
-  signUp(): void {
-    this._authService.signUp('aaa@gmail.com', '123123').subscribe(res => {
-      console.log(res);
-    })
-  }
+  // signUp(): void {
+  //   this._authService.signUp('aaa@gmail.com', '123123').subscribe(res => {
+  //     console.log(res);
+  //   })
+  // }
 
   checkId(): void {
     console.log(this._authService.currentUserId);

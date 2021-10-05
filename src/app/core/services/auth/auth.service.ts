@@ -38,13 +38,12 @@ export class AuthService {
     );
   }
 
-  signUp(email: string, password: string): Observable<void> {
+  signUp(email: string, password: string, name: string): Observable<void> {
     return from(this.angularFireAuth.createUserWithEmailAndPassword(email, password)).pipe(
       tap(userCredential => {
-        console.log("dfdf")
         this.userService.user = userCredential.user;
       }),
-      switchMap(userCredential => this.userService.createUser(userCredential.user?.uid, {name: 'B', lastName: 'B', email: 'b@b'})),
+      switchMap(userCredential => this.userService.createUser(userCredential.user?.uid, {name: name, email: email, categories: []})),
     );;
   }
 

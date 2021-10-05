@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -14,9 +15,16 @@ export class RegisterComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   })
 
-  constructor() { }
+  constructor(private _auth: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+  signUp() {
+    let user = this.loginForm.value;
+    this._auth.signUp(user.email, user.password, user.name).subscribe(res => {
+      console.log(res);
+    }, (err) => {console.log(err.message)})
   }
 
 
@@ -32,7 +40,6 @@ export class RegisterComponent implements OnInit {
       return 'You have to type name'
     }
     else {
-      console.log(this.loginForm.controls['name'])
       if (this.loginForm.controls['name'].hasError('length')) {
         return "Password has to be longer than 6"
       } else {
