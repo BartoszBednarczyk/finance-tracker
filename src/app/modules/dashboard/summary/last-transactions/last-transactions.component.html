@@ -1,18 +1,25 @@
 <div class="container">
-    <div class="card">
+    <div class="card" *ngFor="let transaction of transactions" (click)="openTransactionDetails(transaction)">
         <div class="left-side">
             <div class="icon">
-                🐶
+                {{ categories.hasOwnProperty(transaction.value.category) ? categories[transaction.value.category].icon : '❓' }}
             </div>
             <div class="text">
-                <h2>Pets</h2>
-                <p>27/09/2021</p>
+                <h2>
+                    {{
+                        transaction.value.title
+                            ? transaction.value.title
+                            : categories.hasOwnProperty(transaction.value.category)
+                            ? categories[transaction.value.category].name
+                            : 'Deleted category'
+                    }}
+                </h2>
+                <p>{{ transaction.value.date.toDate() | date }}</p>
             </div>
         </div>
-        
-        <div class="amount">
-            <h2>23$</h2>
+
+        <div class="amount" [ngClass]="transaction.value.type == 'expense' ? 'amount--expense' : 'amount--income'">
+            <h2>{{ transaction.value.amount }}$</h2>
         </div>
     </div>
-    
 </div>

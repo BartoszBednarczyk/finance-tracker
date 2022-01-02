@@ -1,5 +1,4 @@
 export interface User {
-  name: string;
-  email: string;
-  categories: any[];
+    name: string;
+    email: string;
 }

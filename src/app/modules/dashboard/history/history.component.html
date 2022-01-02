@@ -1,1 +1,104 @@
-<p>history works!</p>
+<div class="container">
+    <div class="search-bar">
+        <form [formGroup]="filterQueryFormGroup">
+            <mat-form-field>
+                <mat-label>Search</mat-label>
+                <input matInput autocomplete="off" formControlName="title" />
+            </mat-form-field>
+        </form>
+
+        <button mat-icon-button [matMenuTriggerFor]="sortMenu">
+            <mat-icon color="primary">sort</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+            <mat-icon color="primary">filter_alt</mat-icon>
+        </button>
+    </div>
+    <div class="inner-container">
+        <div class="card" *ngFor="let transaction of filteredTransactions" (click)="openTransactionDetails(transaction)">
+            <div class="left-side">
+                <div class="icon">
+                    {{ categories.hasOwnProperty(transaction.value.category) ? categories[transaction.value.category].icon : '❓' }}
+                </div>
+                <div class="text">
+                    <h2>
+                        {{
+                            transaction.value.title
+                                ? transaction.value.title
+                                : categories.hasOwnProperty(transaction.value.category)
+                                ? categories[transaction.value.category].name
+                                : 'Deleted category'
+                        }}
+                    </h2>
+                    <p>{{ transaction.value.date.toDate() | date }}</p>
+                </div>
+            </div>
+
+            <div class="amount" [ngClass]="transaction.value.type == 'expense' ? 'amount--expense' : 'amount--income'">
+                <h2>{{ transaction.value.amount }}$</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-menu #sortMenu="matMenu">
+    <form [formGroup]="filterQueryFormGroup">
+        <mat-radio-group formControlName="sort">
+            <div mat-menu-item>
+                <mat-radio-button
+                    [value]="{ order: 'Desc', query: 'date' }"
+                    [checked]="filterQueryFormGroup.controls['sort'].value.order == 'Desc' && filterQueryFormGroup.controls['sort'].value.query == 'date'"
+                    >Date Descending</mat-radio-button
+                >
+            </div>
+            <div mat-menu-item>
+                <mat-radio-button
+                    [value]="{ order: 'Asc', query: 'date' }"
+                    [checked]="filterQueryFormGroup.controls['sort'].value.order == 'Asc' && filterQueryFormGroup.controls['sort'].value.query == 'date'"
+                    >Date Ascending</mat-radio-button
+                >
+            </div>
+
+            <div mat-menu-item>
+                <mat-radio-button
+                    [value]="{ order: 'Asc', query: 'amount' }"
+                    [checked]="filterQueryFormGroup.controls['sort'].value.order == 'Asc' && filterQueryFormGroup.controls['sort'].value.query == 'amount'"
+                    >Amount Descending</mat-radio-button
+                >
+            </div>
+            <div mat-menu-item>
+                <mat-radio-button
+                    [value]="{ order: 'Desc', query: 'amount' }"
+                    [checked]="filterQueryFormGroup.controls['sort'].value.order == 'Desc' && filterQueryFormGroup.controls['sort'].value.query == 'amount'"
+                    >Amount Ascending</mat-radio-button
+                >
+            </div>
+        </mat-radio-group>
+    </form>
+</mat-menu>
+
+<mat-menu #filterMenu="matMenu" (click)="$event.stopPropagation()">
+    <!-- <button mat-menu-item [matMenuTriggerFor]="expensesMenu">Expenses</button> -->
+    <div mat-menu-item (click)="$event.stopPropagation()">
+        <mat-form-field>
+            <mat-label>Expenses</mat-label>
+            <mat-select [formControl]="expenses" multiple>
+                <mat-option *ngFor="let expense of expenseCategories" [value]="expense.id">{{ expense.name }} {{ expense.icon }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div mat-menu-item (click)="$event.stopPropagation()">
+        <mat-form-field>
+            <mat-label>Incomes</mat-label>
+            <mat-select [formControl]="incomes" multiple>
+                <mat-option *ngFor="let income of incomeCategories" [value]="income.id">{{ income.name }} {{ income.icon }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <!-- <button mat-menu-item [matMenuTriggerFor]="incomesMenu">Incomes</button> -->
+</mat-menu>
+
+<mat-menu #expensesMenu="matMenu"> </mat-menu>
+
+<mat-menu #incomesMenu="matMenu"> </mat-menu>

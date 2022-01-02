@@ -1,11 +1,33 @@
 <div class="container">
     <div class="profile-container">
-        <img src="assets/images/profile_mockup.jpg">
-        <h1>Hello, <span *ngIf="user">{{user.name}}</span></h1>
+        <!-- <img src="assets/images/profile_mockup.jpg" /> -->
+        <h1>
+            Hello, <span *ngIf="user">{{ user.name }}</span>
+        </h1>
     </div>
     <div class="settings-container">
+        <button mat-icon-button color="primary" [matMenuTriggerFor]="alertsMenu">
+            <mat-icon [matBadge]="alert" [matBadgeHidden]="alert > 0 ? false : true" matBadgeColor="warn">notifications</mat-icon>
+        </button>
         <button mat-icon-button color="primary" (click)="openDialog()">
             <mat-icon>settings</mat-icon>
         </button>
     </div>
 </div>
+
+<mat-menu #alertsMenu>
+    <div class="alerts-container">
+        <h1 style="margin-bottom: 5px">Reminders</h1>
+        <mat-divider></mat-divider>
+        <div mat-menu-item *ngFor="let alert of alerts" class="alert" (click)="dismissAlert($event, alert.id, !alert.isRead)">
+            <div class="text">
+                <h1>{{ alert.title }}</h1>
+                <h2>{{ alert.date.toDate() | date }}</h2>
+            </div>
+            <div class="action">
+                <div class="badge" matBadge="⠀" matBadgeSize="small" matBadgePosition="above after" [matBadgeHidden]="alert.isRead" matBadgeColor="warn"></div>
+                <mat-icon class="close-button" (click)="deleteAlert($event, alert.id)">close</mat-icon>
+            </div>
+        </div>
+    </div>
+</mat-menu>

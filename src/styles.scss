@@ -1,47 +1,70 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~@angular/material/theming";
+@import '~@angular/material/theming';
 $custom-typography: mat-typography-config(
-  $font-family: "Lato",
+    $font-family: 'Lato',
 );
 @include angular-material-typography($custom-typography);
-@import "./assets/theme.scss";
+@import './assets/theme.scss';
 :root {
-  --primary: #155263;
-  --secondary: #ffc93c;
-  --background-light: #e8e8e8;
-  --background-dark: #e0e0e0;
-  --primary-light: #a2dbfa;
-  --primary-dark: #053742;
-  --white: #e8f0f2;
+    --primary: #155263;
+    --secondary: #ffc93c;
+    --background-light: #e8e8e8;
+    --background-dark: #e0e0e0;
+    --primary-light: #a2dbfa;
+    --primary-dark: #053742;
+    --white: #e8f0f2;
 }
 
 html,
 body {
-  height: 100%;
-  background-color: var(--background-light);
+    height: 100%;
+    background-color: var(--background-light);
 }
 body {
-  margin: 0;
+    margin: 0;
 }
 
 * {
-  font-family: "Lato";
+    font-family: 'Lato';
 }
 
 h1 {
-  color: var(--primary);
-  font-weight: 600 !important;
-  font-size: 1.5em;
-  font-family: "Lato" !important;
+    color: var(--primary);
+    font-weight: 600 !important;
+    font-size: 1.5em;
+    font-family: 'Lato' !important;
 }
 
 p {
-  color: var(--primary);
-  font-weight: 400;
-  font-size: 1.2em;
+    color: var(--primary);
+    font-weight: 400;
+    font-size: 1.2em;
 }
 
 .mat-dialog-container {
-  padding: 0 !important;
+    padding: 0 !important;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    margin: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #eeeeee;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
 }

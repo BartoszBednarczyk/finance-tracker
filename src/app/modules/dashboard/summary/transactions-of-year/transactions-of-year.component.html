@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="text">
+        <h1>{{ balance }}$</h1>
+        <p>Balance</p>
+    </div>
+    <apx-chart
+        #chartspark3
+        [series]="chartAreaSparkline3Options.series"
+        [chart]="commonAreaSparlineOptions.chart"
+        [stroke]="commonAreaSparlineOptions.stroke"
+        [yaxis]="commonAreaSparlineOptions.yaxis"
+        [fill]="commonAreaSparlineOptions.fill"
+    ></apx-chart>
+</div>

@@ -1,30 +1,43 @@
 <div class="container">
-    <div class="balance-container">
-        <h1>234$</h1>
-    </div>
+    <!-- <div class="balance-container">
+        <h1>{{ balance }}$</h1>
+    </div> -->
 
-        <form class="form-container">
-            <mat-form-field>
-                <mat-label>Type</mat-label>
-                <mat-select>
-                    <mat-option>Income</mat-option>
-                    <mat-option>Expense</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Category</mat-label>
-                <mat-select>
-                    <mat-option>Pets</mat-option>
-                    <mat-option>Car</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Amount</mat-label>
-                <input matInput type="number">
-            </mat-form-field>
-                <button mat-raised-button color="primary">
-                    Add
-                </button>
-        </form>
-
+    <form class="form-container" [formGroup]="addForm" (ngSubmit)="addTransaction()">
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option value="income">Income</mat-option>
+                <mat-option value="expense">Expense</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+                <ng-container *ngIf="addForm.value.type === 'income'">
+                    <mat-option *ngFor="let category of incomeCategories" value="{{ category.id }}"
+                        >{{ category.value.icon }} {{ category.value.name }}</mat-option
+                    >
+                </ng-container>
+                <ng-container *ngIf="addForm.value.type === 'expense'">
+                    <mat-option *ngFor="let category of expenseCategories" value="{{ category.id }}"
+                        >{{ category.value.icon }} {{ category.value.name }}</mat-option
+                    >
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Date</mat-label>
+            <input matInput type="date" formControlName="date" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount" />
+        </mat-form-field>
+        <button mat-raised-button color="primary">Add</button>
+    </form>
 </div>

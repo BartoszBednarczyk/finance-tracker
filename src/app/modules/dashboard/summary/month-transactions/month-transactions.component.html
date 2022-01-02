@@ -1,0 +1,16 @@
+<div class="container">
+    <div id="chart">
+        <apx-chart
+            [series]="chartOptions.series"
+            [chart]="chartOptions.chart"
+            [labels]="chartOptions.labels"
+            [responsive]="chartOptions.responsive"
+            [legend]="chartOptions.legend"
+            [stroke]="{ show: false }"
+        ></apx-chart>
+    </div>
+    <div class="total" *ngIf="monthTotal">
+        <p>{{ monthTotal }}$</p>
+        <h2>This month expenses</h2>
+    </div>
+</div>

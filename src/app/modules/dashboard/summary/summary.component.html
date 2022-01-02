@@ -1,34 +1,30 @@
 <div class="container">
-
     <div class="grid-container">
         <div class="header">
             <app-header></app-header>
         </div>
 
-            <app-voice-assistant></app-voice-assistant>
+        <app-voice-assistant></app-voice-assistant>
 
         <div class="card1">
-            e
+            <app-month-transactions></app-month-transactions>
         </div>
         <div class="card2">
-            f
+            <app-alert-buttons></app-alert-buttons>
         </div>
         <div class="chart">
-            g
+            <app-transactions-of-year></app-transactions-of-year>
         </div>
         <div class="plant">
-            <img src="assets/images/plant.svg">
+            <img src="assets/images/plant.svg" />
+        </div>
+        <div class="add-transaction">
+            <app-add-transactions></app-add-transactions>
         </div>
     </div>
 
     <div class="transaction-container">
-        <div class="add-transaction">
-            <app-add-transactions></app-add-transactions>
-        </div>
-        <mat-divider></mat-divider>
-
-            <app-last-transactions></app-last-transactions>
-    
+        <h1>Recent transactions</h1>
+        <app-last-transactions></app-last-transactions>
     </div>
-
 </div>

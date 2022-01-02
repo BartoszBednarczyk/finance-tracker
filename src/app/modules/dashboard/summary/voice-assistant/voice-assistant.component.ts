@@ -1,15 +1,69 @@
 import { Component, OnInit } from '@angular/core';
+import { Client, ClientState, stateToString, Word, Entity, Intent, ClientOptions, Segment } from '@speechly/browser-client';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { VoiceAssistantPanelComponent } from './voice-assistant-panel/voice-assistant-panel.component';
 
 @Component({
-  selector: 'app-voice-assistant',
-  templateUrl: './voice-assistant.component.html',
-  styleUrls: ['./voice-assistant.component.scss']
+    selector: 'app-voice-assistant',
+    templateUrl: './voice-assistant.component.html',
+    styleUrls: ['./voice-assistant.component.scss'],
 })
 export class VoiceAssistantComponent implements OnInit {
+    clientState = ClientState.Disconnected;
+    client!: Client;
+    text: string = '';
+    constructor(private _bottomSheet: MatBottomSheet) {}
 
-  constructor() { }
+    ngOnInit(): void {
+        this.client = new Client({
+            appId: '4dce5399-e4d4-45cf-9b30-fef378a3420c',
+            language: 'en-US',
+        });
+        this.client.initialize();
+        this.client.onSegmentChange((segment) => {
+            if (segment.intent && segment.isFinal) {
+                this.joinWords(segment.words);
+                this.openBottomSheet(segment);
+            }
+        });
+    }
+    openBottomSheet(data: any): void {
+        this._bottomSheet.open(VoiceAssistantPanelComponent, {
+            data,
+        });
+    }
 
-  ngOnInit(): void {
-  }
+    joinWords(words: any): void {
+        if (words) {
+            this.text = '';
+            words.map((word: any) => {
+                this.text += ' ' + word.value;
+            });
+        }
+    }
 
+    newClient(): Client {
+        const appId = '4dce5399-e4d4-45cf-9b30-fef378a3420c';
+        const language = 'en-US';
+        const opts: ClientOptions = {
+            appId,
+            language,
+            debug: true,
+            // Enabling logSegments logs the updates to segment (transcript, intent and entities) to console.
+            // Consider turning it off in the production as it has extra JSON.stringify operation.
+            logSegments: true,
+        };
+
+        return new Client(opts);
+    }
+
+    onMouseDown(): void {
+        console.log('Pressed');
+        this.client.startContext();
+    }
+
+    onMouseUp(): void {
+        console.log('Freed');
+        this.client.stopContext();
+    }
 }

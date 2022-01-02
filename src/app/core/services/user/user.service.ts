@@ -10,44 +10,42 @@ import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 import QuerySnapshot = firebase.firestore.QuerySnapshot;
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class UserService {
-  uid: string = '';
-  account: Observable<any> = new Observable();
+    uid: string = '';
+    account: Observable<any> = new Observable();
 
-  constructor(private afUser: AngularFirestore) {
-    
-  }
+    constructor(private afUser: AngularFirestore, private afTransactions: AngularFirestore) {}
 
-   
+    private _user: UserFirebase | null = null;
 
-  private _user: UserFirebase | null = null;
+    get user(): UserFirebase | null {
+        return this._user;
+    }
 
-  get user(): UserFirebase | null {
-    return this._user
-  }
+    set user(newUser: UserFirebase | null) {
+        this._user = newUser;
+    }
 
-  set user(newUser: UserFirebase | null) {
-    this._user = newUser;
-  }
+    createUser(uid: string | undefined, user: User): Promise<void> {
+        this.afTransactions.collection<any>(uid!).doc('transactions').set({});
+        this.afTransactions.collection<any>(uid!).doc('categories').set({});
+        this.afTransactions.collection<any>(uid!).doc('alerts').set({});
+        return this.afUser.collection(uid!).doc('account').set({
+            name: user.name,
+            email: user.email,
+        });
+    }
 
-  createUser(uid: string | undefined, user: User): Promise<void> {
-    return this.afUser.collection(uid!).doc('account').set({
-      name: user.name,
-      email: user.email,
-      categories: user.categories,
-    });
-  }
+    getUsers(): Observable<QuerySnapshot<User>> {
+        return this.afUser.collection<User>('users').get();
+    }
 
-  getUsers(): Observable<QuerySnapshot<User>> {
-    return this.afUser.collection<User>('users').get();
-  }
-
-  getUser(uid: string): Observable<DocumentSnapshot<User>> {
-    // TODO: Sprawdzać czy jest pusty
-    this.uid = uid;
-    this.account = this.afUser.collection<User>(uid).doc('account').valueChanges();
-    return this.account;
-  }
+    getUser(uid: string): Observable<DocumentSnapshot<User>> {
+        // TODO: Sprawdzać czy jest pusty
+        this.uid = uid;
+        this.account = this.afUser.collection<User>(uid).doc('account').valueChanges();
+        return this.account;
+    }
 }

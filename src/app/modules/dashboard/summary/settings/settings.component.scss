@@ -1,108 +1,113 @@
 .container {
-  width: 60vw;
-  height: 80vh;
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: 1fr;
-  overflow: hidden;
+    width: 60vw;
+    height: 80vh;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 1fr;
+    overflow: hidden;
 }
 
 .content {
-  width: 100%;
-  height: 100%;
-  max-height: 70vh;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    max-height: 70vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
 }
 
 .menu button {
-  width: 100%;
-  color: white;
+    width: 95%;
+    color: white;
+    margin: 2px;
 }
 
 .menu {
-  background-color: var(--secondary);
+    background-color: var(--secondary);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .category-lists {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  height: 100%;
-  max-height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    height: 100%;
+    max-height: 100%;
 }
 
 .income {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-height: 100%;
-  overflow-y: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .expense {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-height: 100%;
-  overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .category {
-  width: 250px;
-  height: 50px;
-  background-color: white;
-  display: grid;
-  grid-template-columns: 50px 1fr;
-  border: 1px solid var(--primary);
-  border-radius: 10px;
-  margin: 10px;
+    width: 250px;
+    height: 50px;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    margin: 10px;
 }
 
 .icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  border-radius: 10px 0px 0px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px 0px 0px 10px;
 }
 
 .icon:hover {
-  background-color: var(--background-light);
+    background-color: var(--background-light);
 }
 
 .add-category {
-  width: 250px;
-  height: 50px;
-  display: grid;
-  grid-template-columns: 50px 1fr;
-  border: 1px solid var(--primary);
-  border-radius: 10px;
-  margin: 10px;
-  background-color: var(--primary);
-  color: white;
-  cursor: pointer;
+    width: 250px;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    margin: 10px;
+    background-color: var(--primary);
+    color: white;
+    cursor: pointer;
 }
 
 .add-category:hover {
-  background-color: var(--primary-dark);
-  border-radius: 10px;
+    background-color: var(--primary-dark);
+    border-radius: 10px;
 }
 
 .icon-add {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .name {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50px;
 }

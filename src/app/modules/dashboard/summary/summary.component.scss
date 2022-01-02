@@ -1,14 +1,14 @@
 .container {
-  width: 100%;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 4fr 1fr;
-  box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    box-sizing: border-box;
 }
 
 .header {
-  grid-row: 1;
-  grid-column: 1 / 8;
+    grid-row: 1;
+    grid-column: 1 / 8;
 }
 
 // .add-transaction {
@@ -26,69 +26,149 @@
 // }
 
 .transaction-container {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  background-color: var(--background-dark);
-  padding: 20px;
-  overflow-x: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    background-color: var(--background-dark);
+    padding: 20px;
+    overflow-x: hidden;
 }
 
 app-last-transactions {
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 mat-divider {
-  margin: 10px 0 15px 0;
+    margin: 10px 0 15px 0;
 }
 
 .grid-container {
-  max-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 20px;
-  padding: 20px;
-  box-sizing: border-box;
+    max-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 app-voice-assistant {
-  grid-row: 2 / 5;
-  grid-column: 1 / 4;
-  background-color: var(--background-dark);
-  border-radius: 10px;
-  max-height: 100%;
+    grid-row: 5 / 9;
+    grid-column: 1 / 4;
+    background-color: var(--background-dark);
+    border-radius: 10px;
+    max-height: 100%;
 }
 
 .card1 {
-  grid-row: 2 / 5;
-  grid-column: 4 / 6;
-  background-color: var(--background-dark);
-  border-radius: 10px;
+    grid-row: 2 / 5;
+    grid-column: 4 / 6;
+    //background-color: var(--background-dark);
+    border-radius: 10px;
+}
+
+.add-transaction {
+    grid-row: 2 / 7;
+    grid-column: 6 / 8;
+    background-color: var(--background-dark);
+    border-radius: 10px;
 }
 
 .card2 {
-  grid-row: 2 / 5;
-  grid-column: 6 / 8;
-  background-color: var(--background-dark);
-  border-radius: 10px;
+    grid-row: 7 / 9;
+    grid-column: 6 / 8;
+    //background-color: var(--background-dark);
+    border-radius: 10px;
 }
 
 .chart {
-  grid-row: 5 / 9;
-  grid-column: 1 / 6;
-  background-color: var(--background-dark);
+    grid-row: 2 / 5;
+    grid-column: 1 / 4;
+
+    background-color: var(--background-dark);
+    border-radius: 10px;
 }
 
 .plant {
-  grid-row: 5 / 9;
-  grid-column: 6 / 8;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+    grid-row: 5 / 9;
+    grid-column: 4 / 6;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+@media (max-width: 650px) {
+    .container {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+
+    .grid-container {
+        display: grid;
+        min-height: 1190px;
+        height: auto;
+        grid-template-columns: 320px;
+        grid-template-rows: auto auto auto auto auto auto;
+    }
+
+    .transaction-container {
+        height: 500px;
+        overflow: hidden;
+        display: block;
+    }
+
+    app-voice-assistant {
+        grid-row: 2;
+        grid-column: 1;
+        background-color: var(--background-dark);
+        border-radius: 10px;
+        max-height: 100%;
+        height: 300px;
+    }
+
+    .card1 {
+        grid-row: 6;
+        grid-column: 1;
+        //background-color: var(--background-dark);
+        border-radius: 10px;
+    }
+
+    .add-transaction {
+        grid-row: 3;
+        grid-column: 1;
+        background-color: var(--background-dark);
+        border-radius: 10px;
+    }
+
+    .card2 {
+        grid-row: 5;
+        grid-column: 1;
+        //background-color: var(--background-dark);
+        border-radius: 10px;
+    }
+
+    .chart {
+        grid-row: 4;
+        grid-column: 1;
+
+        background-color: var(--background-dark);
+        border-radius: 10px;
+    }
+
+    .plant {
+        grid-row: 5 / 9;
+        grid-column: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        display: none;
+    }
 }
