@@ -15,9 +15,6 @@ export class AlertButtonsComponent implements OnInit {
     openRemindDialog() {
         this.dialog.open(RemindDialogComponent, {
             width: 'auto',
-            data: {
-                animal: 'panda',
-            },
         });
     }
 }

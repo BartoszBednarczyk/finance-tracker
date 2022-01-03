@@ -44,6 +44,13 @@ export class AddTransactionsComponent implements OnInit {
         this._transactionsService.transactions.subscribe((transactions: any) => {
             this.balance = this._transactionsService.getTotalBalance(transactions);
         });
+
+        this._transactionsService.fillForm$.subscribe((transaction) => {
+            this.addForm.controls['type'].setValue(transaction.type);
+            this.addForm.controls['category'].setValue(transaction.category);
+            this.addForm.controls['date'].setValue(transaction.date);
+            this.addForm.controls['amount'].setValue(transaction.amount);
+        });
     }
 
     addTransaction() {

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Client, ClientState, stateToString, Word, Entity, Intent, ClientOptions, Segment } from '@speechly/browser-client';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { VoiceAssistantPanelComponent } from './voice-assistant-panel/voice-assistant-panel.component';
+import { CategoriesService } from 'src/app/core/services/categories/categories.service';
+import { Categories } from 'src/app/shared/interfaces/Categories.interface';
+import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
 
 @Component({
     selector: 'app-voice-assistant',
@@ -12,7 +15,27 @@ export class VoiceAssistantComponent implements OnInit {
     clientState = ClientState.Disconnected;
     client!: Client;
     text: string = '';
-    constructor(private _bottomSheet: MatBottomSheet) {}
+    expenseCategories: any[] = [];
+    incomeCategories: any[] = [];
+    transactions: any[] = [];
+    isLoaderVisible = false;
+    constructor(private _bottomSheet: MatBottomSheet, private _categoriesService: CategoriesService, private _transactionsService: TransactionsService) {
+        this._categoriesService.categories.subscribe((categories: Categories) => {
+            this.expenseCategories = [];
+            this.incomeCategories = [];
+            if (categories) {
+                for (const [key, value] of Object.entries(categories)) {
+                    if (value.type === 'expense') {
+                        this.expenseCategories.push({ value, id: key });
+                    } else if (value.type === 'income') {
+                        this.incomeCategories.push({ value, id: key });
+                    }
+                }
+            }
+        });
+
+        this._transactionsService.transactions.subscribe((data) => (this.transactions = data));
+    }
 
     ngOnInit(): void {
         this.client = new Client({
@@ -29,7 +52,7 @@ export class VoiceAssistantComponent implements OnInit {
     }
     openBottomSheet(data: any): void {
         this._bottomSheet.open(VoiceAssistantPanelComponent, {
-            data,
+            data: { data, incomeCategories: this.incomeCategories, expenseCategories: this.expenseCategories, transactions: this.transactions },
         });
     }
 
@@ -59,11 +82,13 @@ export class VoiceAssistantComponent implements OnInit {
 
     onMouseDown(): void {
         console.log('Pressed');
+        this.isLoaderVisible = true;
         this.client.startContext();
     }
 
     onMouseUp(): void {
         console.log('Freed');
+        this.isLoaderVisible = false;
         this.client.stopContext();
     }
 }
