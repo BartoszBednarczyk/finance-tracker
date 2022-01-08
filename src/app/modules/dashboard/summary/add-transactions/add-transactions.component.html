@@ -3,7 +3,15 @@
         <h1>{{ balance }}$</h1>
     </div> -->
 
+    <div class="form-container"></div>
     <form class="form-container" [formGroup]="addForm" (ngSubmit)="addTransaction()">
+        <mat-form-field *ngIf="isCyclic">
+            <mat-label>Type of cyclic transaction</mat-label>
+            <mat-select formControlName="cycle">
+                <mat-option value="week">Weekly</mat-option>
+                <mat-option value="month">Monthly</mat-option>
+            </mat-select>
+        </mat-form-field>
         <mat-form-field>
             <mat-label>Title</mat-label>
             <input matInput formControlName="title" />

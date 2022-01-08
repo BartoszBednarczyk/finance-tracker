@@ -22,6 +22,8 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "@ng-web-apis/common": "^1.12.1",
+    "@ng-web-apis/speech": "^1.0.0",
     "@speechly/browser-client": "^1.0.19",
     "@speechly/browser-ui": "^5.0.2",
     "apexcharts": "^3.29.0",

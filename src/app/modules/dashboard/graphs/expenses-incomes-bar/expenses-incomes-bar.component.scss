@@ -1,0 +1,17 @@
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-container {
+    width: 70%;
+}
+
+.change-chart {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}

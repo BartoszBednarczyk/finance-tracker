@@ -66,4 +66,13 @@ export class HeaderComponent implements OnInit {
         ev.stopPropagation();
         this._alertsService.deleteAlert(id);
     }
+
+    showAlert(alert: any) {
+        let currentDate = dayjs().format('MM-DD-YYYY');
+        let alertDate = dayjs(alert.date.toDate()).format('MM-DD-YYYY');
+        if (alertDate > currentDate) {
+            return false;
+        }
+        return true;
+    }
 }

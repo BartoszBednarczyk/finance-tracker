@@ -1,129 +1,180 @@
 <div class="container">
     <div class="menu">
-        <button mat-raised-button color="primary">
+        <button mat-raised-button color="primary" (click)="currentTab = 'categories'">
             <mat-icon>category</mat-icon>
             Categories
         </button>
+        <button mat-raised-button color="primary" (click)="currentTab = 'cyclic'">
+            <mat-icon>autorenew</mat-icon>
+            Cyclic transactions
+        </button>
+        <button mat-raised-button color="primary" (click)="currentTab = 'balance'">
+            <mat-icon>account_balance_wallet</mat-icon>
+            Balance
+        </button>
+        <button mat-raised-button color="primary" (click)="currentTab = 'account'">
+            <mat-icon>person</mat-icon>
+            Account
+        </button>
     </div>
-    <div class="content">
-        <div class="add-category" (click)="saveCategories()">
-            <div class="icon-add">
-                <mat-icon>done</mat-icon>
-            </div>
-            <div class="name">
-                Save
-            </div>
+    <div class="content" *ngIf="currentTab === 'categories'">
+        <ng-container *ngTemplateOutlet="categories"></ng-container>
+    </div>
+    <div class="content" *ngIf="currentTab === 'cyclic'">
+        <ng-container *ngTemplateOutlet="cyclic"></ng-container>
+    </div>
+    <div class="content" *ngIf="currentTab === 'balance'">
+        <ng-container *ngTemplateOutlet="balance"></ng-container>
+        <div class="plant">
+            <img src="assets/images/plant.svg" />
         </div>
+    </div>
+    <div class="content" *ngIf="currentTab === 'account'">
+        <ng-container *ngTemplateOutlet="acc"></ng-container>
+        <div class="plant">
+            <img src="assets/images/plant.svg" />
+        </div>
+    </div>
+</div>
 
-            <div class="category-lists">
-                <div class="income">
-                    <div class="add-category" (click)="addCategory('income')">
-                        <div class="icon-add">
-                            <mat-icon>add</mat-icon>
-                        </div>
-                        <div class="name">
-                            Add income category
-                        </div>
+<ng-template #cyclic>
+    <h1>Cyclic transactions</h1>
+    <app-last-transactions
+        [isCyclic]="true"
+        [cyclicTransactions]="cyclicTransactions"
+        (deleteCyclicTransactions)="deleteCyclicTransaction($event)"
+    ></app-last-transactions>
+</ng-template>
+
+<ng-template #balance>
+    <div class="balance">
+        <mat-form-field>
+            <mat-label>Initial balance</mat-label>
+            <input matInput type="number" [(ngModel)]="initBalance" />
+        </mat-form-field>
+        <button mat-raised-button color="primary">Change</button>
+    </div>
+</ng-template>
+
+<ng-template #acc>
+    <div class="balance">
+        <mat-form-field>
+            <mat-label>Old password</mat-label>
+            <input matInput type="password" [(ngModel)]="oldPassword" autocomplete="off" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>New password</mat-label>
+            <input matInput type="password" [(ngModel)]="password" autocomplete="off" />
+        </mat-form-field>
+        <button mat-raised-button color="primary">Change</button>
+    </div>
+</ng-template>
+
+<ng-template #categories>
+    <div class="add-category" (click)="saveCategories()">
+        <div class="icon-add">
+            <mat-icon>done</mat-icon>
+        </div>
+        <div class="name">Save</div>
+    </div>
+
+    <div class="category-lists">
+        <div class="income">
+            <div class="add-category" (click)="addCategory('income')">
+                <div class="icon-add">
+                    <mat-icon>add</mat-icon>
+                </div>
+                <div class="name">Add income category</div>
+            </div>
+            <ng-container *ngFor="let category of arrayCategories">
+                <div class="category" *ngIf="category.value.type == 'income'">
+                    <div class="icon" [matMenuTriggerFor]="menu">
+                        {{ category.value.icon }}
                     </div>
-                    <ng-container  *ngFor="let category of arrayCategories">
-                    <div class="category" *ngIf="category.value.type == 'income'" >
-                        
-                        <div class="icon" [matMenuTriggerFor]="menu">
-                            {{category.value.icon}}
-                        </div>
-                        
-              <mat-menu #menu="matMenu" >
-                <ngx-emoj
-                (click) = "$event.stopPropagation()"
-                [width]="'auto'"
-                [height]="'40vh'"
-                [theme]= "      {
-                    martShowHeader: true,
-                    martShowFooter: false,
-                    martHeaderPadding: {x: '0px', y: '0px'},
-                    martFooterPadding: {x: '0px', y: '0px'},
-                    martHeaderBG: '#ffffff',
-                    martFooterBG: '#ffffff',
-                    martBG: '#ffffff',
-                    martCategoryColor: '#94a0a6',
-                    martCategoryColorActive:  '#455a64',
-                    martActiveCategoryIndicatorColor: '#00897b',
-                    martEmojiFontSize: '150%',
-                    martCategoryFontSize: '20px',
-                    martBorderRadius: '10px',
-                    martActiveCategoryIndicatorHeight: '4px',
-                    martEmojiPadding: {x: '40px', y: '40px'}
-                  }  
-                "
-                (onemojipick)="handleEmoji($event, category.id)"
-              >
-              </ngx-emoj>
-              </mat-menu>
-              <div class="name">
-            <input matInput [(ngModel)]="category.value.name">
+
+                    <mat-menu #menu="matMenu">
+                        <ngx-emoj
+                            (click)="$event.stopPropagation()"
+                            [width]="'auto'"
+                            [height]="'40vh'"
+                            [theme]="{
+                                martShowHeader: true,
+                                martShowFooter: false,
+                                martHeaderPadding: { x: '0px', y: '0px' },
+                                martFooterPadding: { x: '0px', y: '0px' },
+                                martHeaderBG: '#ffffff',
+                                martFooterBG: '#ffffff',
+                                martBG: '#ffffff',
+                                martCategoryColor: '#94a0a6',
+                                martCategoryColorActive: '#455a64',
+                                martActiveCategoryIndicatorColor: '#00897b',
+                                martEmojiFontSize: '150%',
+                                martCategoryFontSize: '20px',
+                                martBorderRadius: '10px',
+                                martActiveCategoryIndicatorHeight: '4px',
+                                martEmojiPadding: { x: '40px', y: '40px' }
+                            }"
+                            (onemojipick)="handleEmoji($event, category.id)"
+                        >
+                        </ngx-emoj>
+                    </mat-menu>
+                    <div class="name">
+                        <input matInput [(ngModel)]="category.value.name" />
                         <button matSuffix mat-icon-button aria-label="Delete" (click)="deleteCategory(category)">
                             <mat-icon>close</mat-icon>
-                          </button>
-              </div>
-            
+                        </button>
+                    </div>
                 </div>
             </ng-container>
-                </div>
-                <div class="expense">
-                    <div class="add-category" (click)="addCategory('expense')">
-                        <div class="icon-add">
-                            <mat-icon>add</mat-icon>
-                        </div>
-                        <div class="name">
-                            Add expense category
-                        </div>
-                    </div>
-            
-                    <ng-container  *ngFor="let category of arrayCategories">
-                        <div class="category" *ngIf="category.value.type == 'expense'" >
-                            
-                            <div class="icon" [matMenuTriggerFor]="menu">
-                                {{category.value.icon}}
-                            </div>
-                            
-                  <mat-menu #menu="matMenu" >
-                    <ngx-emoj
-                    (click) = "$event.stopPropagation()"
-                    [width]="'auto'"
-                    [height]="'40vh'"
-                    [theme]= "      {
-                        martShowHeader: true,
-                        martShowFooter: false,
-                        martHeaderPadding: {x: '0px', y: '0px'},
-                        martFooterPadding: {x: '0px', y: '0px'},
-                        martHeaderBG: '#ffffff',
-                        martFooterBG: '#ffffff',
-                        martBG: '#ffffff',
-                        martCategoryColor: '#94a0a6',
-                        martCategoryColorActive:  '#455a64',
-                        martActiveCategoryIndicatorColor: '#00897b',
-                        martEmojiFontSize: '150%',
-                        martCategoryFontSize: '20px',
-                        martBorderRadius: '10px',
-                        martActiveCategoryIndicatorHeight: '4px',
-                        martEmojiPadding: {x: '40px', y: '40px'}
-                      }  
-                    "
-                    (onemojipick)="handleEmoji($event, category.id)"
-                  >
-                  </ngx-emoj>
-                  </mat-menu>
-                  <div class="name">
-                <input matInput [(ngModel)]="category.value.name">
-                            <button matSuffix mat-icon-button aria-label="Delete" (click)="deleteCategory(category)">
-                                <mat-icon>close</mat-icon>
-                              </button>
-                  </div>
-                
-                    </div>
-                </ng-container>
-            </div>
-            
         </div>
-    
-</div>
+        <div class="expense">
+            <div class="add-category" (click)="addCategory('expense')">
+                <div class="icon-add">
+                    <mat-icon>add</mat-icon>
+                </div>
+                <div class="name">Add expense category</div>
+            </div>
+
+            <ng-container *ngFor="let category of arrayCategories">
+                <div class="category" *ngIf="category.value.type == 'expense'">
+                    <div class="icon" [matMenuTriggerFor]="menu">
+                        {{ category.value.icon }}
+                    </div>
+
+                    <mat-menu #menu="matMenu">
+                        <ngx-emoj
+                            (click)="$event.stopPropagation()"
+                            [width]="'auto'"
+                            [height]="'40vh'"
+                            [theme]="{
+                                martShowHeader: true,
+                                martShowFooter: false,
+                                martHeaderPadding: { x: '0px', y: '0px' },
+                                martFooterPadding: { x: '0px', y: '0px' },
+                                martHeaderBG: '#ffffff',
+                                martFooterBG: '#ffffff',
+                                martBG: '#ffffff',
+                                martCategoryColor: '#94a0a6',
+                                martCategoryColorActive: '#455a64',
+                                martActiveCategoryIndicatorColor: '#00897b',
+                                martEmojiFontSize: '150%',
+                                martCategoryFontSize: '20px',
+                                martBorderRadius: '10px',
+                                martActiveCategoryIndicatorHeight: '4px',
+                                martEmojiPadding: { x: '40px', y: '40px' }
+                            }"
+                            (onemojipick)="handleEmoji($event, category.id)"
+                        >
+                        </ngx-emoj>
+                    </mat-menu>
+                    <div class="name">
+                        <input matInput [(ngModel)]="category.value.name" />
+                        <button matSuffix mat-icon-button aria-label="Delete" (click)="deleteCategory(category)">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</ng-template>

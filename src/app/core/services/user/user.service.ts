@@ -35,6 +35,7 @@ export class UserService {
         return this.afUser.collection(uid!).doc('account').set({
             name: user.name,
             email: user.email,
+            initBalance: 0,
         });
     }
 

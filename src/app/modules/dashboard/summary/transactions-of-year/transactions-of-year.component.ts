@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
+import * as dayjs from 'dayjs';
 
 @Component({
     selector: 'app-transactions-of-year',
@@ -8,9 +9,13 @@ import { TransactionsService } from 'src/app/core/services/transactions/transact
 })
 export class TransactionsOfYearComponent implements OnInit {
     balance: number = 0;
+    transactions: any[] = [];
+    chartInit = false;
     constructor(private _transactionsService: TransactionsService) {
         this._transactionsService.transactions.subscribe((transactions) => {
             this.balance = this._transactionsService.getTotalBalance(transactions);
+            this.transactions = transactions;
+            this.initChart();
         });
     }
     chartAreaSparkline3Options: any = {};
@@ -28,24 +33,39 @@ export class TransactionsOfYearComponent implements OnInit {
         fill: {
             opacity: 0.3,
         },
+        dataLabels: {
+            enabled: false,
+        },
+        xaxis: {
+            categories: [],
+        },
         yaxis: {
             min: 0,
         },
     };
     ngOnInit(): void {
+        //this.initChart();
+    }
+
+    initChart(): void {
+        let data = this.randomizeArray();
+        console.log(data);
         this.chartAreaSparkline3Options = {
             series: [
                 {
-                    name: 'chart-big-sparkline',
-                    data: this.randomizeArray(this.sparkLineData),
+                    name: 'Expenses',
+                    data: data.tempSerie ? data.tempSerie : [],
                 },
             ],
             title: {
-                text: '$135,965',
+                text: 'Daily expenses',
                 offsetX: 0,
                 style: {
-                    fontSize: '24px',
+                    fontSize: '14px',
                 },
+            },
+            xaxis: {
+                categories: data.tempLabels ? data.tempLabels : [],
             },
             subtitle: {
                 text: 'Profits',
@@ -58,22 +78,36 @@ export class TransactionsOfYearComponent implements OnInit {
     }
 
     public sparkLineData = [47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46];
-
-    public randomizeArray(arg: any): number[] {
-        var array = arg.slice();
-        var currentIndex = array.length,
-            temporaryValue,
-            randomIndex;
-
-        while (0 !== currentIndex) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
+    public addDataLabels(): any {
+        let tempLabels = [];
+        for (let i = 0; i < 10; i++) {
+            tempLabels.unshift(dayjs().subtract(i, 'days'));
         }
+        return tempLabels;
+    }
+    public randomizeArray(): any {
+        let tempSerie = [];
+        let tempLabels = [];
 
-        return array;
+        for (let i = 0; i < 10; i++) {
+            let tempBalance = 0;
+            let currentDate = dayjs().subtract(i, 'days');
+            tempLabels.unshift(currentDate.format('MM-DD'));
+
+            for (const [key, value] of Object.entries(this.transactions)) {
+                console.log(dayjs(value.date.toDate()).isSame(currentDate));
+                if (dayjs(value.date.toDate()).isSame(currentDate, 'day')) {
+                    if (value.type == 'expense') {
+                        tempBalance += value.amount;
+                    }
+                }
+            }
+            tempSerie.unshift(tempBalance);
+
+            if (i == 9) {
+                this.chartInit = true;
+                return { tempSerie, tempLabels, tempBalance };
+            }
+        }
     }
 }

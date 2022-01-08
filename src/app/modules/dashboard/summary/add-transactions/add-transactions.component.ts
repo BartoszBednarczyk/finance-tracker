@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CategoriesService } from 'src/app/core/services/categories/categories.service';
 import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
@@ -10,6 +10,8 @@ import { Categories } from 'src/app/shared/interfaces/Categories.interface';
     styleUrls: ['./add-transactions.component.scss'],
 })
 export class AddTransactionsComponent implements OnInit {
+    @Input() isCyclic = false;
+    @Output() closeDialog: EventEmitter<any> = new EventEmitter();
     addForm = new FormGroup({
         title: new FormControl(''),
         type: new FormControl('expense'),
@@ -17,6 +19,7 @@ export class AddTransactionsComponent implements OnInit {
         amount: new FormControl(0),
         date: new FormControl(new Date()),
         description: new FormControl(''),
+        cycle: new FormControl(''),
     });
 
     expenseCategories: any[] = [];
@@ -54,7 +57,16 @@ export class AddTransactionsComponent implements OnInit {
     }
 
     addTransaction() {
-        console.log(this.addForm.value);
-        this._transactionsService.addTransaction(this.addForm.value);
+        if (this.isCyclic) {
+            this.addCyclicTransaction();
+        } else {
+            console.log(this.addForm.value);
+            this._transactionsService.addTransaction(this.addForm.value);
+        }
+    }
+
+    addCyclicTransaction() {
+        console.log('Added cyclic transaction');
+        this.closeDialog.emit({ form: this.addForm.value });
     }
 }

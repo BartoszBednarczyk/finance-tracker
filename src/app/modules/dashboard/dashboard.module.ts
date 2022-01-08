@@ -33,6 +33,11 @@ import { RemindDialogComponent } from './summary/alert-buttons/remind-dialog/rem
 import { VoiceAssistantPanelComponent } from './summary/voice-assistant/voice-assistant-panel/voice-assistant-panel.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
+import { SpeechSynthesisModule } from '@ng-web-apis/speech';
+import { ExpensesIncomesBarComponent } from './graphs/expenses-incomes-bar/expenses-incomes-bar.component';
+import { ChangeChartControlComponent } from './graphs/change-chart-control/change-chart-control.component';
+import { ExpensesByCategoriesPieComponent } from './graphs/expenses-by-categories-pie/expenses-by-categories-pie.component';
+import { CyclicTransactionDialogComponent } from './summary/alert-buttons/cyclic-transaction-dialog/cyclic-transaction-dialog.component';
 @NgModule({
     declarations: [
         DashboardComponent,
@@ -50,6 +55,10 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
         AlertButtonsComponent,
         RemindDialogComponent,
         VoiceAssistantPanelComponent,
+        ExpensesIncomesBarComponent,
+        ChangeChartControlComponent,
+        ExpensesByCategoriesPieComponent,
+        CyclicTransactionDialogComponent,
     ],
     imports: [
         CommonModule,
@@ -71,6 +80,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
         MatCheckboxModule,
         MatBadgeModule,
         MatBottomSheetModule,
+        SpeechSynthesisModule,
     ],
 })
 export class DashboardModule {}

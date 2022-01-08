@@ -7,6 +7,7 @@ import { UserService } from 'src/app/core/services/user/user.service';
 import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
 import { CategoriesService } from 'src/app/core/services/categories/categories.service';
 import { AlertsService } from 'src/app/core/services/alerts/alerts.service';
+import { CyclicTransactionsService } from 'src/app/core/services/cyclic-transactions/cyclic-transactions.service';
 @Injectable({
     providedIn: 'root',
 })
@@ -19,7 +20,8 @@ export class IsSignedInGuard implements CanActivate {
         private _userService: UserService,
         private _transactionsService: TransactionsService,
         private _categoriesService: CategoriesService,
-        private _alertsService: AlertsService
+        private _alertsService: AlertsService,
+        private _cyclicTransactionsService: CyclicTransactionsService
     ) {}
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         return this._angularFireAuth.authState.pipe(
@@ -32,6 +34,9 @@ export class IsSignedInGuard implements CanActivate {
                 if (auth) {
                     if (this._transactionsService.transactions.pipe(isEmpty())) {
                         this._transactionsService.getTransactions(auth.uid);
+                    }
+                    if (this._cyclicTransactionsService.cyclicTransactions.pipe(isEmpty())) {
+                        this._cyclicTransactionsService.getCyclicTransactions(auth.uid);
                     }
                     if (this._categoriesService.categories.pipe(isEmpty())) {
                         this._categoriesService.getCategories(auth.uid);

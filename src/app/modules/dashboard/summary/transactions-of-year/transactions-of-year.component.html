@@ -4,11 +4,14 @@
         <p>Balance</p>
     </div>
     <apx-chart
+        *ngIf="chartInit"
         #chartspark3
         [series]="chartAreaSparkline3Options.series"
         [chart]="commonAreaSparlineOptions.chart"
         [stroke]="commonAreaSparlineOptions.stroke"
         [yaxis]="commonAreaSparlineOptions.yaxis"
+        [xaxis]="chartAreaSparkline3Options.xaxis"
         [fill]="commonAreaSparlineOptions.fill"
     ></apx-chart>
+    <h1 class="header">Daily expenses</h1>
 </div>

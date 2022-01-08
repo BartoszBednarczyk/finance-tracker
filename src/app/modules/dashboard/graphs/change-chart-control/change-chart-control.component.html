@@ -1,0 +1,8 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>expand_more</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/dashboard/charts/expenses-incomes">Daily incomes and expenses</button>
+    <button mat-menu-item routerLink="/dashboard/charts/by-categories">Expenses by categories</button>
+</mat-menu>

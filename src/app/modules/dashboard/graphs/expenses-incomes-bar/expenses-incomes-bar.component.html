@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="chart-container">
+        <apx-chart
+            *ngIf="chartInit"
+            #chartspark3
+            [series]="chartAreaSparkline3Options.series"
+            [chart]="commonAreaSparlineOptions.chart"
+            [stroke]="commonAreaSparlineOptions.stroke"
+            [yaxis]="commonAreaSparlineOptions.yaxis"
+            [xaxis]="chartAreaSparkline3Options.xaxis"
+            [title]="chartAreaSparkline3Options.title"
+            [fill]="commonAreaSparlineOptions.fill"
+        ></apx-chart>
+    </div>
+</div>
+
+<div class="change-chart">
+    <app-change-chart-control></app-change-chart-control>
+</div>

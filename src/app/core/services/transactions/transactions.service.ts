@@ -14,6 +14,7 @@ export class TransactionsService {
     sortedTransactions: any = [];
     fillForm = new Subject<any>();
     fillForm$ = this.fillForm.asObservable();
+    voices: any;
 
     constructor(private afTransactions: AngularFirestore) {}
 

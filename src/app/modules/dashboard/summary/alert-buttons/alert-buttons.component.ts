@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CyclicTransactionDialogComponent } from './cyclic-transaction-dialog/cyclic-transaction-dialog.component';
 import { RemindDialogComponent } from './remind-dialog/remind-dialog.component';
 
 @Component({
@@ -14,6 +15,12 @@ export class AlertButtonsComponent implements OnInit {
 
     openRemindDialog() {
         this.dialog.open(RemindDialogComponent, {
+            width: 'auto',
+        });
+    }
+
+    openCyclicDialog() {
+        this.dialog.open(CyclicTransactionDialogComponent, {
             width: 'auto',
         });
     }

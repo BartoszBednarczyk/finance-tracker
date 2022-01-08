@@ -1,25 +1,56 @@
 <div class="container">
-    <div class="card" *ngFor="let transaction of transactions" (click)="openTransactionDetails(transaction)">
-        <div class="left-side">
-            <div class="icon">
-                {{ categories.hasOwnProperty(transaction.value.category) ? categories[transaction.value.category].icon : '❓' }}
+    <ng-container *ngIf="!isCyclic; else cyclic">
+        <div class="card" *ngFor="let transaction of transactions" (click)="openTransactionDetails(transaction)">
+            <div class="left-side">
+                <div class="icon">
+                    {{ categories.hasOwnProperty(transaction.value.category) ? categories[transaction.value.category].icon : '❓' }}
+                </div>
+                <div class="text">
+                    <h2>
+                        {{
+                            transaction.value.title
+                                ? transaction.value.title
+                                : categories.hasOwnProperty(transaction.value.category)
+                                ? categories[transaction.value.category].name
+                                : 'Deleted category'
+                        }}
+                    </h2>
+                    <p>{{ transaction.value.date.toDate() | date }}</p>
+                </div>
             </div>
-            <div class="text">
-                <h2>
-                    {{
-                        transaction.value.title
-                            ? transaction.value.title
-                            : categories.hasOwnProperty(transaction.value.category)
-                            ? categories[transaction.value.category].name
-                            : 'Deleted category'
-                    }}
-                </h2>
-                <p>{{ transaction.value.date.toDate() | date }}</p>
-            </div>
-        </div>
 
-        <div class="amount" [ngClass]="transaction.value.type == 'expense' ? 'amount--expense' : 'amount--income'">
-            <h2>{{ transaction.value.amount }}$</h2>
+            <div class="amount" [ngClass]="transaction.value.type == 'expense' ? 'amount--expense' : 'amount--income'">
+                <h2>{{ transaction.value.amount }}$</h2>
+            </div>
         </div>
-    </div>
+    </ng-container>
+
+    <ng-template #cyclic>
+        <div class="card" *ngFor="let transaction of cyclicTransactions">
+            <div class="left-side">
+                <div class="icon">
+                    {{ transaction.value.category ? categories[transaction.value.category].icon : '❓' }}
+                </div>
+                <div class="cyclic-text">
+                    <h2>
+                        {{
+                            transaction.value.title
+                                ? transaction.value.title
+                                : categories.hasOwnProperty(transaction.value.category)
+                                ? categories[transaction.value.category].name
+                                : 'Deleted category'
+                        }}
+                    </h2>
+                    <p>{{ transaction.value.lastDate.toDate() | date }} (every {{ transaction.value.cycle }})</p>
+                </div>
+            </div>
+
+            <div class="amount" [ngClass]="transaction.value.type == 'expense' ? 'amount--expense' : 'amount--income'">
+                <h2>{{ transaction.value.amount }}$</h2>
+            </div>
+            <button mat-icon-button color="primary" class="delete-cyclic" (click)="deleteCyclicTransaction(transaction)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </ng-template>
 </div>

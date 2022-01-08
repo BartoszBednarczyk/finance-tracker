@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertsService } from 'src/app/core/services/alerts/alerts.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-remind-dialog',
@@ -13,7 +13,7 @@ export class RemindDialogComponent implements OnInit {
         title: new FormControl(''),
         date: new FormControl(''),
     });
-    constructor(private _alertsService: AlertsService, @Inject(MAT_DIALOG_DATA) public data: any) {}
+    constructor(private _alertsService: AlertsService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<RemindDialogComponent>) {}
 
     ngOnInit(): void {
         if (this.data) {
@@ -26,5 +26,6 @@ export class RemindDialogComponent implements OnInit {
 
     addReminder(): void {
         this._alertsService.createAlert(this.form.value);
+        this.dialogRef.close();
     }
 }

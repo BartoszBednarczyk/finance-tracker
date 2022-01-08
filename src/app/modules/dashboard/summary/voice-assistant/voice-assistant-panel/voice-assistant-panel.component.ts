@@ -17,6 +17,7 @@ export class VoiceAssistantPanelComponent implements OnInit {
     expenseCategories: any[] = [];
     incomeCategories: any[] = [];
     transactions: any[] = [];
+    synth: SpeechSynthesis;
     constructor(
         @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
         public dialog: MatDialog,
@@ -26,6 +27,7 @@ export class VoiceAssistantPanelComponent implements OnInit {
         this.expenseCategories = data.expenseCategories;
         this.incomeCategories = data.incomeCategories;
         this.transactions = data.transactions;
+        this.synth = window.speechSynthesis;
     }
 
     ngOnInit(): void {
@@ -71,6 +73,7 @@ export class VoiceAssistantPanelComponent implements OnInit {
                 this.howMuchOnAverageTotally(data);
                 break;
         }
+        this.speak();
     }
 
     addExpense(data: any): void {
@@ -219,5 +222,14 @@ export class VoiceAssistantPanelComponent implements OnInit {
                 expenseCategories,
             });
         }
+    }
+
+    speak(): void {
+        let utterance = new SpeechSynthesisUtterance(this.info);
+        let voice = this._transactionsService.voices.filter((voice: SpeechSynthesisVoice) => voice.name == 'Google US English');
+        if (voice.length) {
+            utterance.voice = voice[0];
+        }
+        speechSynthesis.speak(utterance);
     }
 }

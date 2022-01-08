@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CategoriesService } from 'src/app/core/services/categories/categories.service';
 import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
 import { TransactionDetailsService } from 'src/app/shared/components/transaction-details/transaction-details.service';
@@ -9,6 +9,9 @@ import { TransactionDetailsService } from 'src/app/shared/components/transaction
     styleUrls: ['./last-transactions.component.scss'],
 })
 export class LastTransactionsComponent implements OnInit {
+    @Input() isCyclic = false;
+    @Input() cyclicTransactions: any[] = [];
+    @Output() deleteCyclicTransactions: EventEmitter<any> = new EventEmitter();
     transactions: any[] = [];
     categories: any;
 
@@ -33,5 +36,9 @@ export class LastTransactionsComponent implements OnInit {
     openTransactionDetails(transaction: any): void {
         let categories = this.categories;
         this._transactionService.open({ transaction, categories });
+    }
+
+    deleteCyclicTransaction(transaction: any): void {
+        this.deleteCyclicTransactions.emit(transaction);
     }
 }
